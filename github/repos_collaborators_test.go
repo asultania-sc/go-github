@@ -226,7 +226,7 @@ func TestRepositoryService_GetPermissionLevel(t *testing.T) {
 
 	mux.HandleFunc("/repos/o/r/collaborators/u/permission", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
-		fmt.Fprintf(w, `{"permission":"admin","user":{"login":"u"}}`)
+		fmt.Fprintf(w, `{"permission":"admin","user":{"login":"u"},"role_name":"admin"}`)
 	})
 
 	ctx := context.Background()
@@ -240,6 +240,7 @@ func TestRepositoryService_GetPermissionLevel(t *testing.T) {
 		User: &User{
 			Login: String("u"),
 		},
+		RoleName: String("admin"),
 	}
 
 	if !cmp.Equal(rpl, want) {
